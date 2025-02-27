@@ -4,403 +4,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Café Muller</title>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    /* Global Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    /* Body styling with a background image */
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-      padding: 20px;
-    }
-    /* Header: centered logo only, with rounded edges */
-    header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    header img {
-      height: 80px;
-      border-radius: 50%;
-    }
-    /* Table circles styling */
-    #tables-container {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    .table-circle {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.9);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.3s, background 0.3s;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      padding: 10px;
-      text-align: center;
-    }
-    .table-circle:hover {
-      transform: scale(1.05);
-      background: rgba(255,255,255,1);
-    }
-    .table-circle p {
-      margin: 5px;
-      font-size: 1rem;
-    }
-    .table-number {
-      font-size: 1.4rem;
-      font-weight: 600;
-    }
-    /* Details panel styling */
-    #details-container {
-      background: rgba(255,255,255,0.95);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      max-width: 900px;
-      margin: 0 auto 20px;
-      display: none;
-    }
-    /* Dashboard styling */
-    #dashboard-container {
-      background: rgba(255,255,255,0.95);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    /* Select menu and buttons styling */
-    select {
-      padding: 12px;
-      font-size: 1.2rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
-    button {
-      padding: 12px 20px;
-      font-size: 1.2rem;
-      border-radius: 4px;
-      border: none;
-      background-color: #3498db;
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin: 5px;
-    }
-    button:hover {
-      background-color: #2980b9;
-    }
-    .remove-btn {
-      background-color: #e74c3c;
-    }
-    .remove-btn:hover {
-      background-color: #c0392b;
-    }
-    /* Order list items styling with rounded edges */
-    .order-item {
-      border-radius: 8px;
-      padding: 8px;
-      background: #f9f9f9;
-      margin: 5px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  </style>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Header with centered, rounded logo -->
-  <header>
-    <img src="logo.png" alt="Café Muller Logo">
-  </header>
-
-  <!-- TABLES (CIRCLES) -->
-  <div id="tables-container">
-    <!-- Dynamically created table circles will appear here -->
-  </div>
-
-  <!-- DETAILS PANEL (shows when a table is clicked) -->
-  <div id="details-container">
-    <div id="details-header">
-      <h2 id="details-title">Table X Details</h2>
-      <span id="details-time"></span>
-    </div>
-    <div class="content-section">
-      <!-- ORDER LIST -->
-      <div id="order-list">
-        <h3>Current Items</h3>
-        <ul id="order-items"></ul>
-        <div id="order-total"></div>
+  <div id="container">
+    <!-- LEFT SIDEBAR: Tabs -->
+    <aside id="left-sidebar">
+      <div class="tab active" id="tab-tables" onclick="switchMode('tables')">Tables</div>
+      <div class="tab" id="tab-customers" onclick="switchMode('customers')">Customers</div>
+    </aside>
+    
+    <!-- MIDDLE AREA: Entity Grid and Details Panel -->
+    <main id="middle-content">
+      <div id="entity-grid" class="entity-grid">
+        <!-- Entity boxes will be injected here via script.js -->
       </div>
-      <!-- ADD ITEM PANEL -->
-      <div id="add-item-panel">
-        <h3>Add Items</h3>
-        <select id="item-select"></select>
-        <button onclick="addItem()">Add Item</button>
+      <div id="details-panel" class="details-panel hidden">
+        <h2 id="details-title"></h2>
+        <ul id="details-items">
+          <!-- List of items for the selected entity with delete cross -->
+        </ul>
+        <p id="details-total">Total: 0.00€</p>
+        <button id="clear-btn" onclick="clearSelectedEntity()">Clear (Payment)</button>
       </div>
-    </div>
-    <!-- Clear Table Button -->
-    <div style="text-align: right; margin-top: 10px;">
-      <button id="clear-table-btn" onclick="clearTable()">Clear Table (Payment)</button>
-    </div>
+    </main>
+    
+    <!-- RIGHT SIDEBAR: Vertical Accordion Menu, Custom Item, and Total Sales -->
+    <aside id="right-sidebar">
+      <h3>Menu</h3>
+      <div id="accordion">
+        <div class="accordion-section">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Hot Drinks</span>
+            <span class="accordion-icon">+</span>
+          </div>
+          <div class="accordion-content">
+            <ul id="hot-drinks-list"></ul>
+          </div>
+        </div>
+        <div class="accordion-section">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Cold Drinks</span>
+            <span class="accordion-icon">+</span>
+          </div>
+          <div class="accordion-content">
+            <ul id="cold-drinks-list"></ul>
+          </div>
+        </div>
+        <div class="accordion-section">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Food</span>
+            <span class="accordion-icon">+</span>
+          </div>
+          <div class="accordion-content">
+            <ul id="food-list"></ul>
+          </div>
+        </div>
+        <div class="accordion-section">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Apéro</span>
+            <span class="accordion-icon">+</span>
+          </div>
+          <div class="accordion-content">
+            <ul id="apero-list"></ul>
+          </div>
+        </div>
+        <div class="accordion-section">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Au Verre</span>
+            <span class="accordion-icon">+</span>
+          </div>
+          <div class="accordion-content">
+            <ul id="auverre-list"></ul>
+          </div>
+        </div>
+      </div>
+      <button id="add-custom-btn" onclick="addCustomItem()">Add Custom Item</button>
+      <div id="total-sales">
+        Total Sales: 0.00€
+      </div>
+    </aside>
   </div>
-
-  <!-- DASHBOARD -->
-  <div id="dashboard-container">
-    <h2>Dashboard</h2>
-    <div id="total-sales">Total Sales: 0.00€</div>
-    <div id="product-sales">
-      <h3>Sales by Product</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Count</th>
-            <th>Revenue (€)</th>
-          </tr>
-        </thead>
-        <tbody id="product-sales-body">
-          <!-- Rows will be dynamically inserted here -->
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <script>
-    /***************************************************************
-     * DATA STRUCTURES AND INITIALIZATION
-     ***************************************************************/
-    const menuItems = [
-      { name: 'Espresso (s)', price: 2.5 },
-      { name: 'Espresso (d)', price: 3.5 },
-      { name: 'Americano', price: 3.5 },
-      { name: 'Café filtre', price: 3.5 },
-      { name: 'Cortado', price: 4.0 },
-      { name: 'Cappuccino / Latte', price: 4.5 },
-      { name: 'Flat White', price: 5.0 },
-      { name: 'Chai Latte', price: 5.0 },
-      { name: 'Matcha Latte', price: 5.0 },
-      { name: 'Golden Latte', price: 5.0 },
-      { name: 'Thé / Infusion', price: 5.0 },
-      { name: 'Grand Latte', price: 5.5 },
-      { name: 'V60', price: 6.0 },
-      { name: 'Soda', price: 3.5 },
-      { name: 'Iced Latte (s)', price: 4.5 },
-      { name: 'Iced Latte (d)', price: 5.0 },
-      { name: 'Iced Chai', price: 5.0 },
-      { name: 'Iced Matcha', price: 5.0 },
-      { name: 'Cold Brew', price: 5.0 },
-      { name: 'Espresso Tonic', price: 5.5 },
-      { name: 'Limonade', price: 6.0 },
-      { name: 'Ginger Beer', price: 6.0 },
-      { name: 'Kombucha', price: 6.0 },
-      { name: 'Cookie (Vegan) - Choc, Olive Oil, Fleur de sel', price: 4.0 },
-      { name: 'Cookie - Chocolat, Tahini', price: 4.0 },
-    ];
-
-    const tablesData = {
-      table1: { items: [], firstItemTime: null },
-      table2: { items: [], firstItemTime: null },
-      table3: { items: [], firstItemTime: null },
-      table4: { items: [], firstItemTime: null },
-      table5: { items: [], firstItemTime: null },
-    };
-
-    let selectedTable = null;
-    let totalSalesAmount = 0;
-    let productSales = {};
-    menuItems.forEach(item => {
-      if (!productSales[item.name]) {
-        productSales[item.name] = { count: 0, revenue: 0 };
-      }
-    });
-
-    /***************************************************************
-     * INIT: CREATE TABLE CIRCLES & POPULATE ITEM SELECT
-     ***************************************************************/
-    const tablesContainer = document.getElementById('tables-container');
-    const detailsContainer = document.getElementById('details-container');
-    const detailsTitle = document.getElementById('details-title');
-    const detailsTime = document.getElementById('details-time');
-    const orderItemsList = document.getElementById('order-items');
-    const orderTotal = document.getElementById('order-total');
-    const itemSelect = document.getElementById('item-select');
-
-    for (let i = 1; i <= 5; i++) {
-      const tableDiv = document.createElement('div');
-      tableDiv.classList.add('table-circle');
-      tableDiv.id = `table${i}-circle`;
-
-      const numberP = document.createElement('p');
-      numberP.classList.add('table-number');
-      numberP.textContent = `Table ${i}`;
-
-      const costP = document.createElement('p');
-      costP.id = `table${i}-cost`;
-      costP.textContent = 'Total: 0.00€';
-
-      const timeP = document.createElement('p');
-      timeP.id = `table${i}-time`;
-      timeP.textContent = '00:00';
-
-      tableDiv.appendChild(numberP);
-      tableDiv.appendChild(costP);
-      tableDiv.appendChild(timeP);
-
-      tableDiv.addEventListener('click', () => {
-        selectedTable = `table${i}`;
-        openTableDetails(selectedTable);
-      });
-
-      tablesContainer.appendChild(tableDiv);
-    }
-
-    menuItems.forEach((item, index) => {
-      const option = document.createElement('option');
-      option.value = index;
-      option.textContent = `${item.name} - ${item.price}€`;
-      itemSelect.appendChild(option);
-    });
-
-    /***************************************************************
-     * HELPER FUNCTIONS
-     ***************************************************************/
-    function getTableCost(tableKey) {
-      return tablesData[tableKey].items.reduce((sum, item) => sum + item.price, 0);
-    }
-
-    function formatTimeElapsed(ms) {
-      const totalSeconds = Math.floor(ms / 1000);
-      const hours = Math.floor(totalSeconds / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-      return hours > 0 ? `${hours}h ${minutes}m ${seconds}s` : `${minutes}m ${seconds}s`;
-    }
-
-    function updateTablesUI() {
-      for (let i = 1; i <= 5; i++) {
-        const tableKey = `table${i}`;
-        const tableDiv = document.getElementById(`${tableKey}-circle`);
-        const costP = document.getElementById(`${tableKey}-cost`);
-        const timeP = document.getElementById(`${tableKey}-time`);
-        const totalCost = getTableCost(tableKey);
-        costP.textContent = `Total: ${totalCost.toFixed(2)}€`;
-
-        if (tablesData[tableKey].items.length > 0) {
-          tableDiv.style.background = '#3498db';
-          tableDiv.style.color = '#fff';
-        } else {
-          tableDiv.style.background = 'rgba(255,255,255,0.9)';
-          tableDiv.style.color = '#333';
-        }
-
-        if (tablesData[tableKey].items.length > 0) {
-          const elapsed = Date.now() - tablesData[tableKey].firstItemTime;
-          timeP.textContent = formatTimeElapsed(elapsed);
-        } else {
-          timeP.textContent = '00:00';
-        }
-      }
-    }
-
-    function updateDashboard() {
-      const totalSalesEl = document.getElementById('total-sales');
-      totalSalesEl.textContent = `Total Sales: ${totalSalesAmount.toFixed(2)}€`;
-
-      const productSalesBody = document.getElementById('product-sales-body');
-      productSalesBody.innerHTML = '';
-      for (const product in productSales) {
-        const data = productSales[product];
-        if (data.count > 0) {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td>${product}</td><td>${data.count}</td><td>${data.revenue.toFixed(2)}</td>`;
-          productSalesBody.appendChild(tr);
-        }
-      }
-    }
-
-    function openTableDetails(tableKey) {
-      detailsContainer.style.display = 'block';
-      detailsTitle.textContent = `Table ${tableKey.slice(-1)} Details`;
-      renderSelectedTable(tableKey);
-    }
-
-    function renderSelectedTable(tableKey) {
-      orderItemsList.innerHTML = '';
-      tablesData[tableKey].items.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.classList.add('order-item');
-        li.innerHTML = `<span>${item.name} - ${item.price.toFixed(2)}€</span>
-                        <button class="remove-btn" onclick="removeItem('${tableKey}', ${index})">Remove</button>`;
-        orderItemsList.appendChild(li);
-      });
-      orderTotal.textContent = `Total: ${getTableCost(tableKey).toFixed(2)}€`;
-
-      if (tablesData[tableKey].items.length > 0) {
-        const elapsed = Date.now() - tablesData[tableKey].firstItemTime;
-        detailsTime.textContent = `Time: ${formatTimeElapsed(elapsed)}`;
-      } else {
-        detailsTime.textContent = 'No items yet';
-      }
-    }
-
-    function addItem() {
-      if (!selectedTable) return;
-      const itemIndex = itemSelect.value;
-      const selectedItem = menuItems[itemIndex];
-      if (tablesData[selectedTable].items.length === 0) {
-        tablesData[selectedTable].firstItemTime = Date.now();
-      }
-      tablesData[selectedTable].items.push({ name: selectedItem.name, price: selectedItem.price });
-      updateTablesUI();
-      renderSelectedTable(selectedTable);
-    }
-
-    function removeItem(tableKey, itemIndex) {
-      tablesData[tableKey].items.splice(itemIndex, 1);
-      if (tablesData[tableKey].items.length === 0) {
-        tablesData[tableKey].firstItemTime = null;
-      }
-      updateTablesUI();
-      renderSelectedTable(tableKey);
-    }
-
-    function clearTable() {
-      if (!selectedTable) return;
-      if (!confirm("Are you sure you want to clear all items for this table?")) return;
-      tablesData[selectedTable].items.forEach(item => {
-        totalSalesAmount += item.price;
-        productSales[item.name].count += 1;
-        productSales[item.name].revenue += item.price;
-      });
-      tablesData[selectedTable].items = [];
-      tablesData[selectedTable].firstItemTime = null;
-      updateTablesUI();
-      renderSelectedTable(selectedTable);
-      updateDashboard();
-    }
-
-    setInterval(updateTablesUI, 1000);
-  </script>
+  
+  <!-- FOOTER: Fixed Logo at Bottom Center -->
+  <footer id="footer-logo">
+    <img src="logo.png" alt="Footer Logo">
+  </footer>
+  
+  <!-- Link to external JavaScript file -->
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,267 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: #fafafa;  /* No background image */
+    color: #333;
+  }
+  
+  /* Container: Three-column grid layout */
+  #container {
+    display: grid;
+    grid-template-columns: 200px 1fr 300px;
+    height: 100vh;
+  }
+  
+  /* LEFT SIDEBAR: Tabs */
+  #left-sidebar {
+    background-color: #f0f0f0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .tab {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #3498db;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .tab.active {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  /* MIDDLE AREA: Entity Grid and Details Panel */
+  #middle-content {
+    padding: 20px;
+    overflow-y: auto;
+    background-size: cover;
+  }
+  
+  /* Entity Grid: Rounded-edged squares */
+  .entity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+  }
+  
+  .entity-circle {
+    width: 160px;
+    height: 160px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+  }
+  
+  .entity-circle:hover {
+    transform: scale(1.05);
+    background: #dfe6e9;
+  }
+  
+  .entity-circle.selected {
+    border: 3px solid #3498db;
+  }
+  
+  .entity-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+  }
+  
+  .entity-name {
+    margin: 5px 0;
+    font-size: 0.95rem;
+  }
+  
+  .entity-due,
+  .entity-time {
+    font-size: 0.85rem;
+  }
+  
+  /* "Add Client" special box */
+  .entity-circle.add-client {
+    border: 2px dashed #3498db;
+    color: #3498db;
+  }
+  .entity-circle.add-client img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+  }
+  
+  /* Details Panel: Set to an average size */
+  .details-panel {
+    margin-top: 20px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 650px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .details-panel.hidden {
+    display: none;
+  }
+  .details-panel h2 {
+    margin-bottom: 10px;
+  }
+  .details-panel ul {
+    list-style: none;
+    margin-bottom: 10px;
+  }
+  .details-panel li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f1f1;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+  }
+  .remove-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    cursor: pointer;
+  }
+  
+  /* Clear (Payment) Button */
+  #clear-btn {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  #clear-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  /* RIGHT SIDEBAR: Vertical Accordion Menu and Total Sales */
+  #right-sidebar {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-left: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+  
+  #right-sidebar h3 {
+    margin-bottom: 15px;
+  }
+  
+  /* Accordion (Collapsible) Styles */
+  .accordion-section {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .accordion-icon {
+    margin-left: 10px;
+  }
+  
+  .accordion-content {
+    display: none;
+    padding: 10px;
+  }
+  
+  .accordion-section.active .accordion-content {
+    display: block;
+  }
+  
+  .accordion-section.active .accordion-icon {
+    transform: rotate(45deg);
+  }
+  
+  /* Accordion list items styling */
+  .accordion-content ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .accordion-content li {
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    padding: 6px 8px;
+    border-radius: 4px;
+  }
+  .accordion-content li:hover {
+    background: #e9ecef;
+  }
+  
+  /* Add Custom Item Button */
+  #add-custom-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #27ae60;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+  }
+  #add-custom-btn:hover {
+    background-color: #229954;
+  }
+  
+  /* Total Sales Box */
+  #total-sales {
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    background: #3498db;
+    color: #fff;
+    border-radius: 6px;
+    margin-top: 20px;
+  }
+  
+  /* Footer Logo */
+  #footer-logo {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    z-index: 1000;
+  }
+  #footer-logo img {
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+  }
+  
