@@ -76,6 +76,17 @@ const hotDrinks = [
     switchMode('tables');
     populateAccordion(); // Build out the accordion lists
   });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    switchMode('tables');
+    populateAccordion(); // if using accordion
+    setInterval(() => {
+      updateEntityGrid();
+      if (selectedEntity) {
+        updateDetailsPanel();
+      }
+    }, 5000);  // updates every 1000 ms (1 second)
+  });
   
   /***************************************************************
    * MODE SWITCHING
@@ -106,6 +117,10 @@ const hotDrinks = [
       `;
       addDiv.onclick = () => addNewCustomer();
       grid.appendChild(addDiv);
+    }
+
+    if (entity.items.length > 0) {
+      div.classList.add('occupied');
     }
   
     const entities = currentMode === 'tables' ? tables : customers;
