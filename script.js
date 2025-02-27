@@ -85,7 +85,7 @@ const hotDrinks = [
       if (selectedEntity) {
         updateDetailsPanel();
       }
-    }, 2000);  // updates every 1000 ms (1 second)
+    }, 5000);  // updates every 1000 ms (1 second)
   });
   
   /***************************************************************
