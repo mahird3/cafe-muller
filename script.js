@@ -85,7 +85,7 @@ const hotDrinks = [
       if (selectedEntity) {
         updateDetailsPanel();
       }
-    }, 5000);  // updates every 1000 ms (1 second)
+    }, 2000);  // updates every 1000 ms (1 second)
   });
   
   /***************************************************************
@@ -118,10 +118,6 @@ const hotDrinks = [
       addDiv.onclick = () => addNewCustomer();
       grid.appendChild(addDiv);
     }
-
-    if (entity.items.length > 0) {
-      div.classList.add('occupied');
-    }
   
     const entities = currentMode === 'tables' ? tables : customers;
     entities.forEach(entity => {
@@ -129,6 +125,10 @@ const hotDrinks = [
       div.className = 'entity-circle';
       if (selectedEntity && selectedEntity.id === entity.id) {
         div.classList.add('selected');
+      }
+      // Add the 'occupied' class if the entity has items
+      if (entity.items.length > 0) {
+        div.classList.add('occupied');
       }
       const logoSrc = currentMode === 'tables' ? 'table-logo.png' : 'customer-logo.png';
       const due = entity.items.reduce((sum, item) => sum + item.price, 0);
