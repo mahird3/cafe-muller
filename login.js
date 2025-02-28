@@ -2,7 +2,7 @@
 
 // Hard-coded credentials
 const correctUsername = 'caglarmete';
-const correctPassword = 'mahir';
+const correctPassword = '123456';
 
 document.getElementById('login-form').addEventListener('submit', function(e) {
   e.preventDefault(); // Prevent form submission
