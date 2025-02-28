@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Café Muller</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="container">
+    <!-- LEFT SIDEBAR: Tabs -->
+    <aside id="left-sidebar">
+      <div class="tab active" id="tab-tables" onclick="switchMode('tables')">Tables</div>
+      <div class="tab" id="tab-customers" onclick="switchMode('customers')">Customers</div>
+    </aside>
+    
+    <!-- MIDDLE AREA: Entity Grid and Details Panel -->
+    <main id="middle-content">
+      <div id="entity-grid" class="entity-grid">
+        <!-- Entity boxes will be injected here via script.js -->
+      </div>
+      <div id="details-panel" class="details-panel hidden">
+        <h2 id="details-title"></h2>
+        <ul id="details-items">
+          <!-- List of items for the selected entity with delete cross -->
+        </ul>
+        <p id="details-total">Total: 0.00€</p>
+        <button id="clear-btn" onclick="clearSelectedEntity()">Clear (Payment)</button>
+      </div>
+    </main>
+    
+<!-- RIGHT SIDEBAR: Vertical Accordion Menu, Custom Item, and Total Sales -->
+<aside id="right-sidebar">
+    <h3>Menu</h3>
+    <div id="accordion">
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Hot Drinks</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <ul id="hot-drinks-list"></ul>
+        </div>
+      </div>
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Cold Drinks</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <ul id="cold-drinks-list"></ul>
+        </div>
+      </div>
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Food</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <ul id="food-list"></ul>
+        </div>
+      </div>
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Apéro</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <ul id="apero-list"></ul>
+        </div>
+      </div>
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Au Verre</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <ul id="auverre-list"></ul>
+        </div>
+      </div>
+    </div>
+    <button id="add-custom-btn" onclick="addCustomItem()">Add Custom Item</button>
+    <div id="total-sales">
+      Total Sales: 0.00€
+    </div>
+    <!-- New Reset Button -->
+    <button id="reset-sales-btn" onclick="resetTotalSales()">Reset Total Sales</button>
+  </aside>
+  
+  
+  <!-- FOOTER: Fixed Logo at Bottom Center -->
+  <footer id="footer-logo">
+    <img src="logo.png" alt="Footer Logo">
+  </footer>
+  
+  <!-- Link to external JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>

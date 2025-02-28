@@ -232,6 +232,18 @@ const hotDrinks = [
     const el = document.getElementById('total-sales');
     el.textContent = `Total Sales: ${totalSalesAmount.toFixed(2)}€`;
   }
+
+  function resetTotalSales() {
+    if (confirm("Are you sure you want to reset total sales?")) {
+      totalSalesAmount = 0;
+      updateTotalSalesDisplay();
+    }
+  }
+
+  function updateTotalSalesDisplay() {
+    const totalSalesEl = document.getElementById('total-sales');
+    totalSalesEl.textContent = `Total Sales: ${totalSalesAmount.toFixed(2)}€`;
+  }
   
   /***************************************************************
    * ADD NEW CUSTOMER
